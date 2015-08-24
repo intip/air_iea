@@ -13,11 +13,11 @@ def exec_sql(sql):
 def get_hotel_code(hotel_name):
     sql = "select codfor from e095for where apefor = '%s'" % hotel_name
     rows = exec_sql(sql)
-    if rows
+    if rows:
     	return rows[0][0]
 
 def get_regente_code(bkagt):
     sql = "Select UsuIea V099UTU where UsuAma = '%s'" % bkagt
     rows = exec_sql(sql)
-    if rows
+    if rows:
     	return rows[0][0]

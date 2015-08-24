@@ -9,8 +9,8 @@ from django.conf import settings
 from django.core.management.base import BaseCommand
 
 from airlib import AIRBLK207NotFound, AirKeyError
-from core.tasks import process_file
-from project.local_settings import path_argoit
+from core.tasks import process_file, move_file, type_file
+from project.local_settings import path_argoit, path_regente, path_hotel
 
 class Command(BaseCommand):
     help = "Move os arquivos da pasta raiz para a pasta de integracao"
@@ -23,21 +23,14 @@ class Command(BaseCommand):
     """
 
     def handle_dir(self):
-        paths = glob(join(path_argoit, "*"))
-        import pdb;pdb.set_trace()
-        self.handle_paths(paths)
-
-    def handle_file(self, filepath):
-        try:
-            process_file(filepath)
-
-        except AIRBLK207NotFound, exc:
-            print exc
-            pass
-
-        except AirKeyError, exc:
-            print exc
-            pass
+        
+        paths = glob(join(path_argoit, "*.*"))
+        for path in paths:
+            file_type = type_file(path)
+            if file_type == 'hotel':
+                 move_file(path, path_hotel)
+            else:
+                move_file(path, path_regente)
 
     def handle(self, *args, **options):
         self.handle_dir()

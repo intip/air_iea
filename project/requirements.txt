@@ -5,3 +5,4 @@ autopep8==1.0.4
 distribute==0.6.24
 pep8==1.5.7
 wsgiref==0.1.2
+pymssql # sudo apt-get install freetds-dev

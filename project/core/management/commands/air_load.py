@@ -10,7 +10,7 @@ from django.core.management.base import BaseCommand
 
 from airlib import AIRBLK207NotFound, AirKeyError
 from core.tasks import process_file
-
+from project.local_settings import path_hotel
 
 class Command(BaseCommand):
     help = "Carrega os arquivos Processing para o sistema."
@@ -40,5 +40,4 @@ class Command(BaseCommand):
                     elif isdir(arg):
                         self.handle_path(arg)
         else:
-            inputpath = join(settings.MEDIA_ROOT, 'input')
-            self.handle_dir(inputpath)
+            self.handle_dir(path_hotel)

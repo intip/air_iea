@@ -6,6 +6,7 @@ from decimal import Decimal
 from json import dumps
 from os.path import join
 import codecs
+import shutil
 
 from django.conf import settings
 
@@ -18,6 +19,26 @@ from .models import Processing
 def load_file(filepath):
     fobj = open(filepath)
     print Processing.objects.get_or_create(air_file=fobj)
+
+
+def move_file(filepath, filepath2):
+   """
+   move file da raiz para a folder de processamento
+   """
+   shutil.move(filepath, filepath2)
+
+def type_file(filepath):
+    """ le o arquivo e define o tipo dele """
+    try:
+        fobj = open(filepath)
+        line = fobj.readline()
+        if line:
+            type_file = line.split(';')[0]
+            if type_file == 'AIR-BLK207':
+                return 'hotel'
+    except:
+        pass
+    return 
 
 
 def process_file(filepath, processing=None):
