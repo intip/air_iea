@@ -1,0 +1,67 @@
+KEYS = [
+    ('TipPdt', {'airkey': '', 'default': 'HO', 'mask': 'X(04)'}),
+    ('IdtArq', {'airkey': '', 'default': '', 'mask': 'X(08)'}),
+    ('IdtEmp', {'airkey': 'IDBKG', 'default': 'RIOB2235F', 'mask': 'X(10)'}),
+    ('TipInf', {'airkey': '', 'default': 'R', 'mask': 'X(01)'}),
+    ('AgtRsv', {'airkey': 'BKAGT', 'default': '', 'mask': '9(10)'}),
+    ('CodCli', {'airkey': 'PNRRMK_CodCli', 'default': '', 'mask': '9(06)'}),
+    ('AutCli', {'airkey': 'PNRRMK_AutCli', 'default': '', 'mask': 'X(50)'}),
+    ('NomPes', {'airkey': 'PSGRNME', 'default': '', 'mask': 'X(90)'}),
+    ('CcuPax', {'airkey': 'PNRRMK_CcuPax', 'default': '', 'mask': 'X(30)'}),
+    ('EmlFun', {'airkey': '', 'default': '', 'mask': 'X(100)'}),
+    ('MatFun', {'airkey': 'PNRRMK_MatFun', 'default': '', 'mask': 'X(50)'}),
+    ('NomSol', {'airkey': 'PNRRMK_NomSol', 'default': '', 'mask': 'X(30)'}),
+    ('DatSol', {'airkey': 'PNRDTE', 'default': '', 'transform': 'fixdate'}),
+    ('ForPdt', {'airkey': 'HTLNME', 'default': '', 'mask': '9(06)'}),
+    ('TipPho', {'airkey': '', 'default': 'A', 'mask': 'X(01)'}),
+    ('CodAph', {'airkey': 'SIPPRM_CodAph', 'default': '', 'mask': 'X(05)'}),
+    ('DatIni', {
+        'airkey': 'INDTE',
+        'default': '',
+        'transform': 'date_db_to_dmy'}),
+    ('HorIni', {'airkey': '', 'default': '', 'mask': 'HHMM'}),
+    ('DatFim', {
+        'airkey': 'OUTDTE',
+        'default': '',
+        'transform': 'date_db_to_dmy'}),
+    ('HorFim', {'airkey': '', 'default': '', 'mask': 'HHMM'}),
+    ('CodTar', {'airkey': '', 'default': '', 'mask': 'X(15)'}),
+    ('QtdApp', {
+        # 'airkey': 'SIPPRM',
+        'airkey': '',
+        'default': '1',
+        'mask': '9(02)',
+    }),
+    ('CodMoe', {'airkey': 'CURRCDE', 'default': '', 'mask': 'X(04)'}),
+    ('PrcApt', {
+        'airkey': 'ROOMRTE', 'default': '', 'mask': 'ZZZ.ZZZ.ZZ9,99'}),
+    ('CodPah', {'airkey': '', 'default': 'CM', 'mask': 'X(05)'}),
+    ('VlrPpa', {'airkey': '', 'default': '', 'mask': 'ZZZ.ZZZ.ZZ9,99'}),
+    ('TipNac', {'airkey': '', 'default': 'N', 'mask': 'X(01)'}),
+    ('ObsRes', {'airkey': '', 'default': '', 'mask': 'X(2000)'}),
+    ('DatCnf', {'airkey': '', 'default': ''}),
+    ('DadCnf', {'airkey': 'PNRRMK_DadCnf', 'default': '', 'mask': 'X(50)'}),
+    ('GerRet', {'airkey': '', 'default': 'N', 'mask': 'X(01)'}),
+    ('CodFop', {'airkey': 'GUOPT', 'default': '', 'mask': 'X(10)'}),
+    ('NumCcr', {'airkey': '', 'default': '', 'mask': 'X(50)'}),
+    ('GerDoc', {'airkey': '', 'default': 'S', 'mask': 'X(01)'}),
+    ('DadPcv', {'airkey': '', 'default': '', 'mask': 'X(13)'}),
+    ('ForRep', {'airkey': 'PNRRMK_ForRep', 'default': '', 'mask': '9(06)'}),
+    ('FilCli', {'airkey': 'PNRRMK_FilCli', 'default': '', 'mask': 'X(30)'}),
+    ('CodEt1', {'airkey': 'PNRRMK_CodEt1', 'default': '', 'mask': 'X(30)'}),
+    ('CodEt2', {'airkey': 'PNRRMK_CodEt2', 'default': '', 'mask': 'X(30)'}),
+    ('CodEt3', {'airkey': 'PNRRMK_CodEt3', 'default': '', 'mask': 'X(30)'}),
+    ('CcuVen', {'airkey': '', 'default': '', 'mask': 'X(09)'}),
+    ('RsvDir', {'airkey': 'PNRRMK_RsvDir', 'default': 'S', 'mask': 'X(01)'}),
+    ('CodSgl', {'airkey': 'PNRRMK_CodSgl', 'default': '', 'mask': 'X(10)'}),
+    ('VlrTch', {
+        'airkey': 'PNRRMK_VlrTch', 'default': '', 'mask': 'ZZZ.ZZZ.ZZ9,99'}),
+    ('IdtDiv', {'airkey': '', 'default': '', 'mask': 'Livre'}),
+    ('DesCcu', {'airkey': '', 'default': '', 'mask': 'X(100)'}),
+    ('TaxFor', {'airkey': '', 'default': '', 'mask': 'X(100)'}),
+    ('TipPcv', {'airkey': '', 'default': '', 'mask': 'X(01)'})]
+
+
+if __name__ == "__main__":
+    for position, key in enumerate(KEYS, 1):
+        print position, key

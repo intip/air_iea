@@ -1,0 +1,7 @@
+Django==1.6.8
+South==1.0.2
+argparse==1.2.1
+autopep8==1.0.4
+distribute==0.6.24
+pep8==1.5.7
+wsgiref==0.1.2

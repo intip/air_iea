@@ -1,0 +1,12 @@
+{% extends "admin/change_form.html" %}
+
+{% block field_sets %}
+    {% if change %}
+        <fieldset class="module aligned wide extrapretty">
+            <div class="form-row field-air_file">
+                {{ original.iea_file.read }}
+            </div>
+        </fieldset>
+    {% endif %}
+    {{ block.super }}
+{% endblock %}
