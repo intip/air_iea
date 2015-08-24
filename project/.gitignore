@@ -6,3 +6,5 @@ Sandbox
 data/
 .~lock*
 *zip
+local_settings.py
+*.py[cod]
