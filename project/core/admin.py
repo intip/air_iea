@@ -35,9 +35,10 @@ AIR_FIELDS = [
 
 
 class ProcessingAdmin(ModelAdmin):
+    list_display = ['air_file', 'status']
     fieldsets = \
         ((None, {'classes': ('wide', 'extrapretty'),
-                 'fields': ('air_file', 'iea_file')}),
+                 'fields': ('air_file', 'iea_file','status')}),
          ('AIR',
           {'classes': ('wide', 'extrapretty collapse'),
            'fields': AIR_FIELDS}),

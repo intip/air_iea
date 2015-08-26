@@ -77,7 +77,6 @@ def get_air_data(filepath):
         #         break
 
         #     lines.append(nline)
-
         p = process_line(proccessor_class, line, lines)
         data.update(p.data)
     return data
@@ -136,8 +135,9 @@ def process_air(filepath):
     }
     airdata = get_air_data(filepath)
     ieafilename = "%s.iea" % fname
+    airfilename ="%s.AIR" % fname
     fill_iea_values(ieadata, airdata)
-    return airdata, ieadata, ieafilename
+    return airdata, ieadata, ieafilename, airfilename
 
 
 def get_filename(filepath):

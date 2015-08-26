@@ -8,3 +8,4 @@ data/
 *zip
 local_settings.py
 *.py[cod]
+*.pyc

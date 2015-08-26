@@ -87,18 +87,4 @@
         Pode ser zerado
         Deixar em Branco
         """
-
-
-# Acessos
-
-gustavo
-[10/14/14 3:53:51 PM] Josiete Costa: remoto.abctur.com.br
-[10/14/14 3:56:51 PM] Josiete Costa: abctur-rj\gustavo
-tenta acesssar la
-tem esse email aqui tb
-
-Utilizar o remote Desktop
-
-remoto.abctur.com.br
-Login: gustavo
-Senha: gustavo@14
+S

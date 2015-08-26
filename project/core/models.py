@@ -1,16 +1,37 @@
+# coding: utf-8
+
 from django.core.files.base import ContentFile
 from django.db import models
-
+from django.core.mail import send_mail, EmailMessage, EmailMultiAlternatives
 import iealib
-
-
+import codecs
+import os
+from time import sleep
+from django.conf import settings
+path_regente_rj = settings.PATH_REGENTE_RJ
+path_regente_sp = settings.PATH_REGENTE_SP
+EMAIL_FROM = settings.EMAIL_FROM
+EMAIL_TO = settings.EMAIL_TO
 class Processing(models.Model):
-    air_file = models.FileField(upload_to="input/%Y/%m/%d/%H:%M")
+    #air_file = models.FileField(upload_to="input/%Y/%m/%d/%H:%M")
     air_json_data = models.TextField()
-    iea_file = models.FileField(blank=True, upload_to="output")
+    #iea_file = models.FileField(blank=True, upload_to="output")
     iea_json_data = models.TextField()
     created = models.DateTimeField(auto_now_add=True)
     modified = models.DateTimeField(auto_now=True)
+
+    air_file = models.TextField(
+        blank=True,
+        db_index=True,
+        verbose_name="AIR FILE",
+    )
+
+    iea_file = models.TextField(
+        blank=True,
+        db_index=True,
+        verbose_name="IEA FILE",
+    )
+
     air_BKAGT = models.TextField(
         blank=True,
         db_index=True,
@@ -376,17 +397,22 @@ class Processing(models.Model):
         db_index=True,
         verbose_name="VlrTch",
     )
+    status = models.TextField(
+        blank=True,
+        db_index=True,
+        verbose_name="Status",
+    )
 
     class Meta:
         verbose_name = "Processamento"
         verbose_name_plural = "Processamentos"
 
     def __unicode__(self):
-        return self.air_file.path
+        return self.air_file#.path
 
     def reprocess(self):
         from .tasks import process_file
-        return process_file(self.air_file.path, self)
+        return process_file(self.air_file, self)
 
     def generate_iea_file_contents(self):
         values = []
@@ -396,10 +422,47 @@ class Processing(models.Model):
         return raw
 
     def write_iea_file(self):
+        if self.air_IDBKG.find('SAO') != -1:
+           arquivo = path_regente_sp + '/' + self.iea_file
+        else:
+            arquivo = path_regente_rj + '/' + self.iea_file
+
         raw = self.generate_iea_file_contents()
+        #ieafilepath = join(settings.MEDIA_ROOT, iea_file)
+        ieafile = codecs.open(arquivo, "w", "utf-8")
+        raw = raw.replace('RIOB2210V', 'RIOB2217N')
+        raw = raw.replace('SAOB221BL', 'SAOB221CB')
+        print 'raw', raw
+        ieafile.write(raw)
+        self.read_result_ieafile()
 
-        # if self.iea_file:
-        #     self.iea_file.delete()
-
-        self.iea_file.save(self.iea_file.name,
-                           ContentFile(raw))
+    def read_result_ieafile(self):
+        """ le se integrou com sucesso ou se falhou 
+        1- se esta no folder OK e sucesso
+        2- se nao se esta no erro e erro
+        """
+        sleep(120)
+        if self.air_IDBKG.find('SAO') != -1:
+           arquivo = path_regente_sp
+        else:
+            arquivo = path_regente_rj
+        # esta no ok?
+        if os.path.isfile(arquivo + '/OK/' + self.iea_file.upper()):
+            self.status = 'Integrou'
+            self.save()
+            #integracao correta
+        else:
+            #ve se integracao falhou
+            file_erro = self.iea_file
+            file_erro = file_erro.split('.')
+            file_erro = file_erro[0] + '.ERR'
+            if os.path.isfile(arquivo + '/ERR/' + file_erro):
+                #integracao falhou
+                self.status = 'Não integrou'
+                self.save()
+                file = codecs.open(arquivo + '/ERR/' + file_erro, 'r')
+                mensagem = file.read()
+                titulo = 'erro integracao iea-hotel'
+                mail = EmailMultiAlternatives(titulo, mensagem, EMAIL_FROM, EMAIL_TO)
+                mail.attach_alternative(mensagem, "text/html")
+                mail.send()

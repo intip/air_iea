@@ -94,10 +94,8 @@ class RMFC(Processor):
 class RMPR(Processor):
     detect = r"^RM\*PR\."
     keysre = detect + \
-        r"(?P<PNRRMK_DadCnf>\w+)\s*" \
-        r"/" \
-        r"\s*(?P<PNRRMK_ForRep>\w+)"
-
+        r"\s*\d+\ \/\ (?P<PNRRMK_ForRep>\w+)"
+        #r"(?P<PNRRMK_DadCnf>\w+)\s*" \
 
 class RMAC(Processor):
     detect = r"^RM\*AC\."
@@ -189,11 +187,12 @@ class UHHL(Processor):
         r"(?P<DATERTE>\w{5})",
         r"\+",
         r"(?P<RATEPER>\d{2})",
+        r".*CF-(?P<PNRRMK_DadCnf>\w+);"
         r".*;FM-;",
         r"G-(?P<GUOPT>\w{0,31})",
         r";",
         r".*;SF-;\*\*-;",
-        r"(?P<HTLNME>[\w,\s]{0,40})",
+        r"(?P<HTLNME>[\w,\s,\*]{0,40})",
         r";",
         r".*",
         r"TTL-BRL(?P<TOTRT_Number>[\d,.]{2,10});",
