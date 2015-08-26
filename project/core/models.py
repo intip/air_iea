@@ -432,9 +432,9 @@ class Processing(models.Model):
         ieafile = codecs.open(arquivo, "w", "utf-8")
         raw = raw.replace('RIOB2210V', 'RIOB2217N')
         raw = raw.replace('SAOB221BL', 'SAOB221CB')
+        raw = raw.replace('SAOB2241C', 'SAOB221CB')
         print 'raw', raw
         ieafile.write(raw)
-        self.read_result_ieafile()
 
     def read_result_ieafile(self):
         """ le se integrou com sucesso ou se falhou 

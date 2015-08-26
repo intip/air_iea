@@ -48,7 +48,6 @@ def type_file(filepath):
 def process_file(filepath, processing=None):
     """
     """
-    enviar_email = False
 
     airdata, ieadata, ieafilename, airfilename = process_air(filepath)
     filial = 'RJ'
@@ -71,6 +70,7 @@ def process_file(filepath, processing=None):
         update_fields.append(k)
 
     for k, v in ieadata.items():
+
         if k == 'CodFop' and v.startswith("CC"):
             v = "CC"
 
@@ -107,8 +107,12 @@ def process_file(filepath, processing=None):
                         v = 14784
                 else:
                     v = database.get_hotel_code(airdata['HTLNME'], filial)
-        if v == 0 or v == '':
-            enviar_email = True
+                if v == 0 or v == '':
+                    titulo = 'checar cadastro do hotel'
+                    mensagem = processing.generate_iea_file_contents()
+                    mail = EmailMultiAlternatives(titulo, mensagem, EMAIL_FROM, EMAIL_TO)
+                    mail.attach_alternative(mensagem, "text/html")
+                    mail.send()
 
         if k == 'AgtRsv':
             bkagt = v.strip()
@@ -118,19 +122,12 @@ def process_file(filepath, processing=None):
         setattr(processing, k, v)
         update_fields.append(k)
     processing.save()  # update_fields=update_fields)
-
-    if enviar_email:
-        titulo = 'checar cadastro do hotel'
-        mensagem = processing.generate_iea_file_contents()
-        mail = EmailMultiAlternatives(titulo, mensagem, EMAIL_FROM, EMAIL_TO)
-        mail.attach_alternative(mensagem, "text/html")
-        mail.send()
-    else:    
-        print processing.generate_iea_file_contents()
-        print processing.pk,
-        print processing,
-        print ieafilename
-        processing.save(update_fields=['iea_file'])
-        processing.write_iea_file()
-        move_file(filepath,PATH_AIR_BKP)
+        
+    print processing.generate_iea_file_contents()
+    print processing.pk,
+    print processing,
+    print ieafilename
+    processing.save(update_fields=['iea_file'])
+    processing.write_iea_file()
+    move_file(filepath,PATH_AIR_BKP)
         

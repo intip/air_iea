@@ -170,7 +170,7 @@ class UHHL(Processor):
         r";",
         r"(?P<OUTDTE>\w{5})",
         r";",
-        r"(?P<AIRPT>\w{3,5})",
+        r"(?P<AIRPT>\w{0,5})",
         r";",
         r"(?P<CDETRAN>[\w,\s]{0,17})",
         r";",
