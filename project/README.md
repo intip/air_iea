@@ -1,3 +1,40 @@
+#instalando
+
+1) instale o python
+sudo apt-get install python2.7
+
+2) instale o pip
+wget https://bootstrap.pypa.io/get-pip.py
+sudo python2.7 get-pip.py
+
+3) cria um virtualenv
+sudo pip install virtualenv
+mkdir .env
+virtualenv airiea
+source ~/.env/airiea/bin/activate
+
+4) instale o projeto
+cd ~/home
+git clone https://github.com/intip/air_iea.git
+
+5) roda o requirements
+cd  air_iea/project/
+pip install -r requirements.txt
+
+6) cria o arquivo project/local_settings.py
+e configure as variveis
+PATH_REGENTE_RJ = '/tmp'
+PATH_REGENTE_SP = '/tmp'
+EMAIL_FROM = 'afea@afe.com'
+EMAIL_TO = 'afgeaf@afe.com'
+db_server_rj = ''
+db_user_rj = ''
+db_password_rj = ''
+db_database_rj = ''
+
+7) roda a migracao
+python manage migrate
+
 # TODO
 
 
